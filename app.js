@@ -43,10 +43,10 @@ $("#submit").on("click", function(event){
     //console.log(tRemain);
 
     minTillTrain = frequency - tRemain;
-    console.log("Min till trains: "+minTillTrain);
+    //console.log("Min till trains: "+minTillTrain);
     nextArrival = moment().add(minTillTrain, "minutes");
     var nextArrivalTime = moment(nextArrival).format("hh:mm");
-    console.log("Next Arrival" + nextArrivalTime);
+    //console.log("Next Arrival" + nextArrivalTime);
 
 
     database.ref().push({
@@ -67,12 +67,36 @@ $("#submit").on("click", function(event){
 
 
 });
+/*
+function refreshTime(ftt, frequency){
+    var ftconverted = moment(ftt, "HH:mm").subtract(1, "years");
+   
+
+    var diffTime = moment().diff(moment(ftconverted), "minutes");
+    //console.log("difference in minutes: "+diffTime);
+
+    var tRemain = diffTime % frequency;
+    //console.log(tRemain);
+
+    minTillTrain = frequency - tRemain;
+    //console.log("Min till trains: "+minTillTrain);
+    nextArrival = moment().add(minTillTrain, "minutes");
+    var nextArrivalTime = moment(nextArrival).format("hh:mm");
+    //console.log("Next Arrival" + nextArrivalTime);
+
+    database.ref().set({
+        nextArrival:nextArrivalTime,
+        minTillTrain:minTillTrain
+    })
+};*/
 
 database.ref().on("child_added", function(snap){
     console.log(snap.val().tname);
     console.log(snap.val().destination);
     console.log(snap.val().ftt);
     console.log(snap.val().frequency);
+
+   // refreshTime(snap.val().ftt, snap.val().frequency);
 
     var nrow = $("<tr>");
     nrow.append("<td>"+snap.val().tname+"</td>"
